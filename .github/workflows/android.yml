@@ -30,19 +30,19 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install || true
+          npm install
 
-      - name: Build web assets
+      - name: Build web assets and Sync Capacitor
         run: |
-          npm run build || npx cap sync || true
+          npm run build || true
+          npx cap add android || true
+          npx cap sync
 
       - name: Build Android APK
         run: |
-          if [ -d "android" ]; then
-            cd android && ./gradlew assembleDebug
-          else
-            echo "Folder android tidak ditemukan"
-          fi
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
@@ -50,4 +50,3 @@ jobs:
           name: meowgram-app
           path: '**/*.apk'
           
-        
