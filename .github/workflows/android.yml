@@ -34,7 +34,7 @@ jobs:
 
       - name: Build web assets and Sync Capacitor
         run: |
-          npm run build || true
+          npx vite build --base=./ || npm run build || true
           npx cap add android || true
           npx cap sync
 
